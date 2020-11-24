@@ -32,5 +32,15 @@ def create_SG(nome , region):
         print('Ingress Successfully Set %s' % data)
         return security_group_id
     except ClientError as e:
-        print(e)
-        return e
+        print("Security Group aready exist")
+        group_name = nome
+        response = ec2.describe_security_groups(
+            Filters=[
+                dict(Name='group-name', Values=[group_name])
+            ]
+        )
+        group_id = response['SecurityGroups'][0]['GroupId']
+        print("The security group id is = {}". format(group_id))       
+        return group_id
+
+
