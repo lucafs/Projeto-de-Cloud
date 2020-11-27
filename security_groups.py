@@ -27,6 +27,10 @@ def create_SG(nome , region):
                 {'IpProtocol': 'tcp',
                 'FromPort': 5432,
                 'ToPort': 5432,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                {'IpProtocol': 'tcp',
+                'FromPort': 80,
+                'ToPort': 80,
                 'IpRanges': [{'CidrIp': '0.0.0.0/0'}]}
             ])
         print('Ingress Successfully Set %s' % data)
