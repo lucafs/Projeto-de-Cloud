@@ -32,14 +32,22 @@ def launch_instances(number, user_data, region_number, security_group):
 
 def create_image(instance_id , nameImg , region):
     ec2 = boto3.client('ec2',region_name= region)
-    waiter = ec2.get_waiter('instance_running')
+    print("Waiting for instances to run")
+    waiter = ec2.get_waiter('instance_status_ok')
     waiter.wait(
     InstanceIds=[
         instance_id])
     try:
         response = ec2.create_image(InstanceId= instance_id, Name = nameImg)   
         image_id = response['ImageId'] 
-        print(response['ImageId'])
+        waiter = ec2.get_waiter('image_available')
+        print("Wating for AMI to be ready ... This may take a while")
+        waiter.wait(
+            ImageIds=[
+                image_id
+            ]
+        )
+        print("AMI created with id = {}".format(image_id))
         return image_id
     except ClientError as e:
         print("AMI with this name aready exist")
@@ -83,7 +91,7 @@ reboot
 # print(resp)
 
 # id_inst_orm =launch_instances(1,user_data_django.format("18.204.6.154"), 2,"sg-0b3f8e9f355199f3f")
-# create_image(id_inst_orm,"vamo ae","us-east-2")
+# create_image("i-0fedd9e82b0f2803d","sla","us-east-2")
 
 # resp2 =launch_instances(1,user_data_django, 2,"sg-0b3f8e9f355199f3f")
 # print(resp2)

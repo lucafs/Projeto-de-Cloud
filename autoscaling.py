@@ -16,11 +16,33 @@ def create_LaunchConfig(nome,AMI_ID, security_group_id ,region):
 
     return response
 
-def create_auto_scaling(loadbalacer_name,target_group_arn,autoscaling_name, lauch_config_name):
+def create_modelo_exec(nome,id_imagem ,  secure_groups):
+    client = boto3.client('ec2',region_name= "us-east-2")
+    response = client.create_launch_template(
+            LaunchTemplateName=nome,  
+            LaunchTemplateData={ 
+                'ImageId': id_imagem, 
+                'InstanceType': 't2.micro', 
+                'KeyName': 'Luca Cloud',    
+                'SecurityGroupIds': [ 
+                    secure_groups
+                ], 
+                # 'SecurityGroups': [  
+                #     "security_group_projeto"  
+                # ] 
+                })
+    print("Created Launch Template")
+    return response["LaunchTemplate"]["LaunchTemplateId"]
+
+def create_auto_scaling(loadbalacer_name,target_group_arn,autoscaling_name,lt_id):
     ec2Auto = boto3.client('autoscaling')
     response = ec2Auto.create_auto_scaling_group(
         AutoScalingGroupName= autoscaling_name,
-        LaunchConfigurationName= lauch_config_name,
+        # LaunchConfigurationName= lauch_config_name,
+        LaunchTemplate={
+        'LaunchTemplateId': lt_id,
+        'Version': '1'
+        },
         # InstanceId=instance_id,
         MinSize=1,
         MaxSize=3,
@@ -89,6 +111,5 @@ def create_auto_scaling(loadbalacer_name,target_group_arn,autoscaling_name, lauc
 
 # # response = create_LaunchConfig("testeLC","ami-0a93eb986b63610c9","sg-0b3f8e9f355199f3f","us-east-2")
 
-# response = create_auto_scaling("teste","arn:aws:elasticloadbalancing:us-east-2:671559748688:targetgroup/TargetGroupProjeto/df03a1f84011c3b3","TesteAUto","testeLC")
-
+# response = create_auto_scaling("LoadBalancerProjeto","arn:aws:elasticloadbalancing:us-east-2:671559748688:targetgroup/TargetGroupProjeto/441cfb90a90ebbae","pfvai","lt-0ca3d44a5af4bce3a")
 # print(response)

@@ -20,16 +20,19 @@ id_inst_orm =launch_instances(1,user_data_django.format(pub_ip_banco),2,id_secur
 id_inst_orm2 =launch_instances(1,user_data_django.format(pub_ip_banco),2,id_security_orm)
 id_inst_orm3 =launch_instances(1,user_data_django.format(pub_ip_banco),2,id_security_orm)
 # #Cria imagem da instancia ORM e deleta a instancia
-idAMI = create_image(id_inst_orm3,"Imagem ORM", "us-east-2")
+idAMI = create_image(id_inst_orm3,"Imagem ORM2", "us-east-2")
 
 tg_arn = create_target_G("TargetGroupProjeto", id_inst_orm,id_inst_orm2,id_inst_orm3)
 LBarn , LBname , listener=create_LB("LoadBalancerProjeto",id_security_orm,tg_arn)
 
 # delete_instance_by_id(id_inst_orm, "us-east-2")
 delete_instance_by_id(id_inst_orm2, "us-east-2")
+delete_instance_by_id(id_inst_orm, "us-east-2")
 delete_instance_by_id(id_inst_orm3, "us-east-2")
 
-launch_config_nome = "LCProjeto"
-LCres = create_LaunchConfig(launch_config_nome,idAMI,id_security_orm,"us-east-2")
+# launch_config_nome = "LCProjeto"
+# LCres = create_LaunchConfig(launch_config_nome,idAMI,id_security_orm,"us-east-2")
 
-Autores = create_auto_scaling(LBname,tg_arn,"AutoProjeto",launch_config_nome)
+id_modelo_exec = create_modelo_exec("ModeloExecProjeto",idAMI,id_security_orm)
+
+create_auto_scaling(LBname,tg_arn,"AutoScalingProjeto2",id_modelo_exec)
