@@ -85,28 +85,3 @@ def create_LB(nome, security_group, target_group):
         }])
     print("load balacer criado com arn = {0} e nome ={1}".format(response["LoadBalancers"][0]["LoadBalancerArn"], nome))
     return response["LoadBalancers"][0]["LoadBalancerArn"] , nome ,  res
-
-
-
-
-
-
-
-# response = create_LaunchConfig("teste","ami-0e45e8235ef3e8d33","sg-0b3f8e9f355199f3f","us-east-2")
-# arn,nome ,res = create_LB("testeLB","sg-0b3f8e9f355199f3f")
-# print(res)
-#arn:aws:elasticloadbalancing:us-east-2:671559748688:loadbalancer/app/testeLB/18fd6c955bf21e03
-
-# resp1 =launch_instances(1,user_data_django, 2,"sg-0b3f8e9f355199f3f")
-# resp2 =launch_instances(1,user_data_django, 2,"sg-0b3f8e9f355199f3f")
-# resp3 =launch_instances(1,user_data_django, 2,"sg-0b3f8e9f355199f3f")
-
-# res = create_target_G("testefinal5", "i-0c67e3cc2db30b513","i-0978f067d3451bab2","i-09e0d93611fd3a85a")
-# print(create_LB("testeLB4","sg-0b3f8e9f355199f3f",res))
-
-
-
-# res = create_target_G("testefinal", "i-0bf9d81e815d02b60","i-0a3c8447c70fcd1cd","i-0eef001a19cb263ac")
-#  arn,nome ,res = create_LB("testeLB","sg-0b3f8e9f355199f3f")
-# print(create_LB("testeLB2","sg-0b3f8e9f355199f3f",res))
-# print(res)

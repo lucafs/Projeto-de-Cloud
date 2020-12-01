@@ -108,8 +108,3 @@ def create_auto_scaling(loadbalacer_name,target_group_arn,autoscaling_name,lt_id
 #         'DisableScaleIn': True|False
 #     },
 #     Enabled=True|False)
-
-# # response = create_LaunchConfig("testeLC","ami-0a93eb986b63610c9","sg-0b3f8e9f355199f3f","us-east-2")
-
-# response = create_auto_scaling("LoadBalancerProjeto","arn:aws:elasticloadbalancing:us-east-2:671559748688:targetgroup/TargetGroupProjeto/441cfb90a90ebbae","pfvai","lt-0ca3d44a5af4bce3a")
-# print(response)

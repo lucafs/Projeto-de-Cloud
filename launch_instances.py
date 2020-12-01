@@ -75,7 +75,7 @@ cd ..
 cd /home/ubuntu/
 sudo apt update
 git clone https://github.com/lucafs/tasks.git
-sed -i "s/'HOST': '3.82.252.173',/'HOST': '{}',/"  /home/ubuntu/tasks/portfolio/settings.py
+sed -i "s/'HOST': 'trocar',/'HOST': '{}',/"  /home/ubuntu/tasks/portfolio/settings.py
 cd tasks/
 ./install.sh
 reboot
@@ -83,30 +83,4 @@ reboot
 
 
 
-# create_image("i-0a18fa42de33c9a64","teste", "us-east-2")
-#id_security = create_SG("security_group_projeto" , "us-east-1")
-# print(id_security)
-
-# resp = launch_instances(1,user_data_postgress,1, "sg-055f2f83344e07db2")
-# print(resp)
-
-# id_inst_orm =launch_instances(1,user_data_django.format("18.204.6.154"), 2,"sg-0b3f8e9f355199f3f")
-# create_image("i-0fedd9e82b0f2803d","sla","us-east-2")
-
-# resp2 =launch_instances(1,user_data_django, 2,"sg-0b3f8e9f355199f3f")
-# print(resp2)
-
-# id_inst_orm =launch_instances(1,user_data_django.format("54.152.56.157"),2,"sg-0b3f8e9f355199f3f")
-
-
-#LEMBRAR DE FILTRAR POR NOME
-# filters = [{  
-#     'Name': 'Image',
-#     'Values': ['vamo ae']
-#     }]
-# ec2 = boto3.client('ec2',region_name= "us-east-1")
-
-# response = ec2.describe_images(Owners=['self'])
-# print(response)
-# print(response["Images"][0]["ImageId"])
 

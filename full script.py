@@ -13,17 +13,18 @@ id_security_orm = create_SG("security_group_projeto" , "us-east-2")
 #Cria o banco de dados
 id_inst_banco = launch_instances(1,user_data_postgress,1, id_security_banco)
 
-#Pega o Ip do banco de dados e cria instancia da ORM
+#Pega o Ip do banco de dados e cria as instancias ORM do target group
 pub_ip_banco = ec2_reg1.describe_instances(InstanceIds=[id_inst_banco])['Reservations'][0]['Instances'][0]['PublicIpAddress']
 print(pub_ip_banco)
 id_inst_orm =launch_instances(1,user_data_django.format(pub_ip_banco),2,id_security_orm)
 id_inst_orm2 =launch_instances(1,user_data_django.format(pub_ip_banco),2,id_security_orm)
 id_inst_orm3 =launch_instances(1,user_data_django.format(pub_ip_banco),2,id_security_orm)
-# #Cria imagem da instancia ORM e deleta a instancia
-idAMI = create_image(id_inst_orm3,"Imagem ORM2", "us-east-2")
+#Cria imagem da instancia ORM e deleta a instancia
+idAMI = create_image(id_inst_orm3,"Imagem ORM", "us-east-2")
 
+#Cria target group e LB
 tg_arn = create_target_G("TargetGroupProjeto", id_inst_orm,id_inst_orm2,id_inst_orm3)
-LBarn , LBname , listener=create_LB("LoadBalancerProjeto",id_security_orm,tg_arn)
+LBarn , LBname , listener = create_LB("LoadBalancerProjeto",id_security_orm,tg_arn)
 
 # delete_instance_by_id(id_inst_orm, "us-east-2")
 delete_instance_by_id(id_inst_orm2, "us-east-2")
@@ -35,4 +36,4 @@ delete_instance_by_id(id_inst_orm3, "us-east-2")
 
 id_modelo_exec = create_modelo_exec("ModeloExecProjeto",idAMI,id_security_orm)
 
-create_auto_scaling(LBname,tg_arn,"AutoScalingProjeto2",id_modelo_exec)
+create_auto_scaling(LBname,tg_arn,"AutoScalingProjeto",id_modelo_exec)
