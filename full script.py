@@ -24,7 +24,7 @@ idAMI = create_image(id_inst_orm3,"Imagem ORM", "us-east-2")
 
 #Cria target group e LB
 tg_arn = create_target_G("TargetGroupProjeto", id_inst_orm,id_inst_orm2,id_inst_orm3)
-LBarn , LBname , listener = create_LB("LoadBalancerProjeto",id_security_orm,tg_arn)
+LBarn , LBname , LBDNS = create_LB("LoadBalancerProjeto",id_security_orm,tg_arn)
 
 # delete_instance_by_id(id_inst_orm, "us-east-2")
 delete_instance_by_id(id_inst_orm2, "us-east-2")
@@ -37,3 +37,6 @@ delete_instance_by_id(id_inst_orm3, "us-east-2")
 id_modelo_exec = create_modelo_exec("ModeloExecProjeto",idAMI,id_security_orm)
 
 create_auto_scaling(LBname,tg_arn,"AutoScalingProjeto",id_modelo_exec)
+
+print("Acess Djando ORM at:")
+print("https://"+ LBDNS + "/")

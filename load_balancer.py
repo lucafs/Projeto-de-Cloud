@@ -43,6 +43,7 @@ def create_target_G(nome ,id_one,id_two,id_three):
         },
     ]
     )
+    # print(response_create)
     print("Target Group criado com a arn ={} ".format(response_create["TargetGroups"][0]["TargetGroupArn"]))
     return response_create["TargetGroups"][0]["TargetGroupArn"]
 
@@ -83,5 +84,6 @@ def create_LB(nome, security_group, target_group):
             'Key': 'string',
             'Value': 'string'
         }])
-    print("load balacer criado com arn = {0} e nome ={1}".format(response["LoadBalancers"][0]["LoadBalancerArn"], nome))
-    return response["LoadBalancers"][0]["LoadBalancerArn"] , nome ,  res
+    print("load balacer criado com o DNS = {0} e nome ={1}".format(response["LoadBalancers"][0]["DNSName"], nome))
+    return response["LoadBalancers"][0]["LoadBalancerArn"] , nome ,  response["LoadBalancers"][0]["DNSName"]
+
