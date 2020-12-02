@@ -33,7 +33,7 @@ def create_SG(nome , region):
                 'ToPort': 80,
                 'IpRanges': [{'CidrIp': '0.0.0.0/0'}]}
             ])
-        print('Ingress Successfully Set %s' % data)
+        print('Ingress Successfully Set')
         return security_group_id
     except ClientError as e:
         print("Security Group aready exist")
